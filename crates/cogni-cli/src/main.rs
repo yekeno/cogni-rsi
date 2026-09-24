@@ -74,6 +74,15 @@ enum Cmd {
         #[arg(long)]
         boundary: Option<PathBuf>,
     },
+    /// Print recent daily_progress records from a sqlite database.
+    RecentRows {
+        /// Path to the sqlite db.
+        #[arg(long)]
+        db: PathBuf,
+        /// Maximum number of rows to display.
+        #[arg(long, default_value_t = 10)]
+        limit: u32,
+    },
 }
 
 #[tokio::main]
@@ -132,6 +141,26 @@ async fn main() -> anyhow::Result<()> {
         }
         Cmd::Dream { db, iterations, boundary } => {
             run_dream(&db, iterations, boundary.as_deref()).await?;
+        }
+        Cmd::RecentRows { db, limit } => {
+            let store = open_read_only(&db)?;
+            let rows = read_recent_rows(store.as_ref(), limit).await?;
+            if rows.is_empty() {
+                println!("No records found in daily_progress.");
+            } else {
+                println!(
+                    "{:<5} {:<8} {:<10} {:<10} {:<8} {:<8} {:<32}",
+                    "Day", "Delta", "Goal", "Boundary", "Pareto", "Beta", "Policy"
+                );
+                println!("{}", "-".repeat(85));
+                for r in rows {
+                    let delta = format!("+{}/-{}/r{}", r.new_nodes, r.closed_nodes, r.reopened_nodes);
+                    println!(
+                        "{:<5} {:<8} {:<10.2} {:<10.2} {:<8.4} {:<8.2} {:<32}",
+                        r.day, delta, r.goal_progress, r.boundary_mastery, r.pareto_auc, r.current_beta, r.selected_policy
+                    );
+                }
+            }
         }
     }
     Ok(())
