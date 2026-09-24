@@ -1,0 +1,30 @@
+[package]
+name = "cogni-cli"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+cogni-core = { path = "../cogni-core" }
+cogni-llm = { path = "../cogni-llm" }
+cogni-policy = { path = "../cogni-policy" }
+cogni-replay = { path = "../cogni-replay" }
+cogni-dreamer = { path = "../cogni-dreamer" }
+cogni-crawler = { path = "../cogni-crawler" }
+cogni-cognition-tree = { path = "../cogni-cognition-tree" }
+cogni-store = { path = "../cogni-store" }
+cogni-tui = { path = "../cogni-tui" }
+
+clap = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+dotenvy = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+chrono = { workspace = true }
+ulid = { workspace = true }
+ratatui = { workspace = true }
+crossterm = { workspace = true }

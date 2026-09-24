@@ -1,0 +1,76 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/cogni-core",
+    "crates/cogni-llm",
+    "crates/cogni-store",
+    "crates/cogni-replay",
+    "crates/cogni-policy",
+    "crates/cogni-crawler",
+    "crates/cogni-cognition-tree",
+    "crates/cogni-dreamer",
+    "crates/cogni-tui",
+    "crates/cogni-cli",
+]
+
+[workspace.package]
+edition = "2021"
+rust-version = "1.75"
+license = "Apache-2.0"
+repository = "https://example.com/cogni-rsi"
+
+[workspace.dependencies]
+# async runtime
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+
+# http / api
+axum = "0.7"
+tower = "0.4"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
+
+# llm
+rig-core = "0.5"
+# (rig-core 通过 OpenAI 兼容协议接入 minimax-m3)
+
+# serde / json
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+# storage
+rusqlite = { version = "0.31", features = ["bundled"] }
+sqlx = { version = "0.7", default-features = false, features = ["runtime-tokio-rustls", "sqlite", "chrono", "uuid"] }
+sqlite-vec = "0.1"
+qdrant-client = "1"
+
+# parser
+tree-sitter = "0.23"
+
+# tui
+ratatui = "0.27"
+crossterm = "0.28"
+
+# errors / logs
+anyhow = "1"
+thiserror = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# cli
+clap = { version = "4", features = ["derive", "env"] }
+
+# time / ids / decimal
+chrono = { version = "0.4", features = ["serde"] }
+ulid = { version = "1", features = ["serde"] }
+rust_decimal = { version = "1", features = ["serde-with-str"] }
+
+# config / env
+dotenvy = "0.15"
+config = "0.14"
+governor = "0.6"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

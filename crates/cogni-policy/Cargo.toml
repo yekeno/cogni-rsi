@@ -1,0 +1,17 @@
+[package]
+name = "cogni-policy"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+cogni-core = { path = "../cogni-core" }
+cogni-replay = { path = "../cogni-replay" }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }

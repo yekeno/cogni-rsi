@@ -1,0 +1,27 @@
+# Rust build artifacts
+/target
+**/*.rs.bk
+*.pdb
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+
+# Local SQLite databases & run artifacts
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+cogni.db
+
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+*.log
