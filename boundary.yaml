@@ -1,0 +1,10 @@
+boundary:
+  - id: finance-core
+    modules: [gl, ap, ar, fa, banking, tax]
+    surfaces: [结账, 过账, 对账, 票据, 凭证, 报表]
+  - id: biz-core
+    modules: [inventory, sales, purchase, crm]
+    surfaces: [订单, 出入库, 客户, 报价]
+  - id: integration
+    modules: [gl↔biz, gl↔bank, biz↔tax]
+    surfaces: [过账接口, 银行对账单, 发票开具]
