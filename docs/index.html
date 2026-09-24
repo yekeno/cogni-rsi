@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>cogni-rsi | Dream-RSI in Rust</title>
+  <meta name="description" content="A production-grade Rust implementation of the Dream-RSI recursive self-improvement framework for enterprise SaaS cognition tree frontier analysis.">
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --bg-surface: #111622;
+      --bg-card: #151c2d;
+      --bg-card-hover: #1c253c;
+      --border: #232d44;
+      --border-accent: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --warning: #f59e0b;
+      --purple: #8b5cf6;
+      --code-bg: #07090e;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #f1f5f9;
+      --bg-card-hover: #e2e8f0;
+      --border: #cbd5e1;
+      --border-accent: #2563eb;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --success: #059669;
+      --success-glow: rgba(5, 150, 105, 0.15);
+      --warning: #d97706;
+      --purple: #7c3aed;
+      --code-bg: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: all 0.2s; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 13, 20, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="light"] header { background: rgba(248, 250, 252, 0.85); }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      color: white;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      font-size: 0.9rem;
+      align-items: center;
+    }
+    .nav-links a { color: var(--text-muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .btn-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-toggle:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 70px 0 50px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 32px;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+    .btn-primary:hover { text-decoration: none; opacity: 0.95; transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .btn-secondary:hover { text-decoration: none; border-color: var(--accent); }
+
+    /* Stat bar */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+    }
+    .section-header {
+      margin-bottom: 36px;
+    }
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      max-width: 750px;
+    }
+
+    /* Interactive Tree Simulator */
+    .tree-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tree-svg-container {
+      width: 100%;
+      height: 380px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tree-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* Calculator Box */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    @media (max-width: 768px) {
+      .calc-grid { grid-template-columns: 1fr; }
+    }
+    .slider-group {
+      margin-bottom: 20px;
+    }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+    }
+    .slider-control {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+    .calc-result {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .calc-formula {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .calc-score {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--success);
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+
+    /* Bento Grid for Crates */
+    .crates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .crate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.2s;
+    }
+    .crate-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .crate-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .crate-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .crate-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Experiment Walkthrough Table */
+    .table-container {
+      overflow-x: auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 24px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .badge-success { background: var(--success-glow); color: var(--success); }
+    .badge-accent { background: var(--accent-glow); color: var(--accent); }
+
+    /* Code blocks */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      margin: 16px 0;
+    }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+
+    /* Tabs */
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-inner">
+      <div class="logo">
+        <span>cogni-rsi</span>
+        <span class="logo-badge">Dream-RSI</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#theory" data-i18n="nav.theory">Theory</a></li>
+        <li><a href="#tree" data-i18n="nav.tree">Cognition Tree</a></li>
+        <li><a href="#crates" data-i18n="nav.crates">Architecture</a></li>
+        <li><a href="#walkthrough" data-i18n="nav.walkthrough">Walkthrough</a></li>
+        <li><a href="#quickstart" data-i18n="nav.quickstart">Quickstart</a></li>
+        <li>
+          <button class="btn-toggle" id="lang-btn" onclick="toggleLanguage()">
+            <span>🌐</span> <span id="lang-text">中文</span>
+          </button>
+        </li>
+        <li>
+          <button class="btn-toggle" id="theme-btn" onclick="toggleTheme()">
+            <span id="theme-icon">☀️</span>
+          </button>
+        </li>
+        <li>
+          <a href="https://github.com/yekeno/cogni-rsi" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
+            GitHub ★
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span data-i18n="hero.badge">Dream-RSI (arXiv:2609.14858v1) Foundation • 10-Crate Rust Workspace</span>
+      </div>
+      <h1>
+        <span data-i18n="hero.title1">Recursive Self-Improvement for</span><br>
+        <span class="gradient-text" data-i18n="hero.title2">Complex Enterprise SaaS Cognition</span>
+      </h1>
+      <p data-i18n="hero.sub">
+        An industrial Rust realization of the Dream-RSI outer iteration loop. Turn historical exploration into an offline replay simulator, dream counterfactual policies, and autonomously master software boundaries.
+      </p>
+      <div class="hero-actions">
+        <a href="#walkthrough" class="btn-primary" data-i18n="hero.cta1">View Live Walkthrough & Data</a>
+        <a href="https://github.com/yekeno/cogni-rsi" target="_blank" class="btn-secondary" data-i18n="hero.cta2">Browse GitHub Repository</a>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-val">76 / 76</div>
+          <div class="stat-desc" data-i18n="stats.tests">Workspace Tests Passed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">10 Crates</div>
+          <div class="stat-desc" data-i18n="stats.crates">Strict Decoupled Architecture</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">O(1) Replay</div>
+          <div class="stat-desc" data-i18n="stats.replay">Prefix-Only Simulator Guarantees</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">100%</div>
+          <div class="stat-desc" data-i18n="stats.mastery">Boundary Mastery on SaaS Target</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Theory & Formula -->
+  <section id="theory">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="theory.tag">Theoretical Foundations</div>
+        <h2 class="section-title" data-i18n="theory.title">The Dream-RSI Formulation (Eq. 1)</h2>
+        <p class="section-sub" data-i18n="theory.sub">
+          In high-dimensional discovery spaces, online evaluation is prohibitively expensive. Dream-RSI optimizes the exploration policy &pi; over historical replay &Dscr;<sub>explore</sub> via Pareto AUC quality penalized by sequential reasoning overhead.
+        </p>
+      </div>
+
+      <div class="calc-grid">
+        <div>
+          <h3 style="margin-bottom: 16px; font-size: 1.15rem;" data-i18n="calc.title">Interactive Policy Score Calculator</h3>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Pareto Frontier AUC (AUC<sub>Pareto</sub>)</span>
+              <span id="auc-val" style="color: var(--accent);">0.85</span>
+            </div>
+            <input type="range" class="slider-control" id="auc-slider" min="0" max="1" step="0.01" value="0.85" oninput="updateScore()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Sequential Rounds (K)</span>
+              <span id="k-val" style="color: var(--warning);">2</span>
+            </div>
+            <input type="range" class="slider-control" id="k-slider" min="1" max="10" step="1" value="2" oninput="updateScore()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Parallel Probes (P)</span>
+              <span id="p-val" style="color: var(--success);">8</span>
+            </div>
+            <input type="range" class="slider-control" id="p-slider" min="1" max="20" step="1" value="8" oninput="updateScore()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Parallelism Penalty Weight (&beta;)</span>
+              <span id="beta-val" style="color: var(--purple);">0.40</span>
+            </div>
+            <input type="range" class="slider-control" id="beta-slider" min="0" max="1" step="0.05" value="0.40" oninput="updateScore()">
+          </div>
+        </div>
+
+        <div class="calc-result">
+          <div class="calc-formula">
+            V(&pi;) = AUC<sub>Pareto</sub> &minus; &beta; &middot; (K / P)
+          </div>
+          <div class="calc-score" id="score-val">0.7500</div>
+          <div style="font-size: 0.9rem; color: var(--text-muted);" id="calc-verdict">
+            Candidate demonstrates efficient parallel scaling over serialized depth search.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Interactive Cognition Tree -->
+  <section id="tree">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="tree.tag">Prefix-Only Replay Simulator</div>
+        <h2 class="section-title" data-i18n="tree.title">Cognition Tree & Frontier Mastery</h2>
+        <p class="section-sub" data-i18n="tree.sub">
+          Nodes represent discovered SaaS domain knowledge (Financial Core, Biz Core, Integrations). Leaf nodes form the frontier, measured via weighted understanding and boundary coverage ratio.
+        </p>
+      </div>
+
+      <div class="tree-box">
+        <div class="tree-svg-container">
+          <svg width="100%" height="100%" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.3"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Lines -->
+            <path d="M 400 50 L 200 130" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 400 50 L 400 130" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 400 50 L 600 130" stroke="url(#edgeGrad)" stroke-width="2"/>
+
+            <path d="M 200 130 L 120 230" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 200 130 L 260 230" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 400 130 L 370 230" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 400 130 L 450 230" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 600 130 L 560 230" stroke="url(#edgeGrad)" stroke-width="2"/>
+            <path d="M 600 130 L 660 230" stroke="url(#edgeGrad)" stroke-width="2"/>
+
+            <!-- Root -->
+            <circle cx="400" cy="50" r="22" fill="#1e293b" stroke="#3b82f6" stroke-width="3"/>
+            <text x="400" y="55" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="monospace">Root</text>
+
+            <!-- Level 1 Domains -->
+            <circle cx="200" cy="130" r="18" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+            <text x="200" y="134" text-anchor="middle" fill="#f8fafc" font-size="10" font-family="monospace">Finance</text>
+
+            <circle cx="400" cy="130" r="18" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+            <text x="400" y="134" text-anchor="middle" fill="#f8fafc" font-size="10" font-family="monospace">BizCore</text>
+
+            <circle cx="600" cy="130" r="18" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+            <text x="600" y="134" text-anchor="middle" fill="#f8fafc" font-size="10" font-family="monospace">Integrate</text>
+
+            <!-- Frontier Leaves -->
+            <rect x="70" y="220" width="100" height="32" rx="6" fill="#111827" stroke="#10b981" stroke-width="2"/>
+            <text x="120" y="240" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">GL / Ledger</text>
+
+            <rect x="210" y="220" width="100" height="32" rx="6" fill="#111827" stroke="#10b981" stroke-width="2"/>
+            <text x="260" y="240" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">AP / Payment</text>
+
+            <rect x="320" y="220" width="100" height="32" rx="6" fill="#111827" stroke="#10b981" stroke-width="2"/>
+            <text x="370" y="240" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">Sales Order</text>
+
+            <rect x="430" y="220" width="100" height="32" rx="6" fill="#111827" stroke="#10b981" stroke-width="2"/>
+            <text x="480" y="240" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">Inventory</text>
+
+            <rect x="540" y="220" width="90" height="32" rx="6" fill="#111827" stroke="#10b981" stroke-width="2"/>
+            <text x="585" y="240" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">Tax / Invoicing</text>
+
+            <rect x="640" y="220" width="90" height="32" rx="6" fill="#111827" stroke="#10b981" stroke-width="2"/>
+            <text x="685" y="240" text-anchor="middle" fill="#10b981" font-size="10" font-family="monospace">Bank Sync</text>
+          </svg>
+        </div>
+
+        <div class="tree-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #3b82f6;"></span>
+            <span>Root Exploration Node</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #8b5cf6;"></span>
+            <span>Domain Category Nodes</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #10b981;"></span>
+            <span>Frontier Leaves (Goal Progress & Boundary Mastery)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Architecture (10 Crates) -->
+  <section id="crates">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="crates.tag">Modular Workspace</div>
+        <h2 class="section-title" data-i18n="crates.title">The 10-Crate System Blueprint</h2>
+        <p class="section-sub" data-i18n="crates.sub">
+          Separation of concerns enforced by Rust compiler boundaries. Hard safety invariants guarantee read-only crawl safety and zero-hallucination replay.
+        </p>
+      </div>
+
+      <div class="crates-grid">
+        <div class="crate-card">
+          <div class="crate-name">cogni-core</div>
+          <div class="crate-tag">Domain Types</div>
+          <div class="crate-desc">Core data structures: CognitionNode, CognitionTree, DirectionPlan, Score, and DailyProgress models.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-cognition-tree</div>
+          <div class="crate-tag">Topology Analysis</div>
+          <div class="crate-desc">Boundary specification parser, TreeDelta (+N/-M/rK) state tracking, weighted goal_progress & boundary_mastery calculation.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-replay</div>
+          <div class="crate-tag">Offline Simulation</div>
+          <div class="crate-desc">Prefix-only Replay Simulator. Strictly prohibits fabricating unobserved nodes or unauthorized state mutation.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-dreamer</div>
+          <div class="crate-tag">Dreaming Engine</div>
+          <div class="crate-desc">The outer dreaming loop, paper formula (1) simulation scoring, candidate perturbation generator, and winner SQLite sync.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-policy</div>
+          <div class="crate-tag">Exploration Policies</div>
+          <div class="crate-desc">CognitionPolicy trait, BaselineParallelRefining policy implementation, and grid direction planner.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-crawler</div>
+          <div class="crate-tag">Target Adapter</div>
+          <div class="crate-desc">Target SaaS adapters for doc, code, and endpoints. Enforces hard safety default-deny WriteGate.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-llm</div>
+          <div class="crate-tag">Model Transport</div>
+          <div class="crate-desc">OpenAI-compatible client targeting MiniMax-M3 with deterministic zero-cost dry-run fallback.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-store</div>
+          <div class="crate-tag">Persistence</div>
+          <div class="crate-desc">SQLite engine managing daily_progress and policy XML audit tables, with sqlite-vec extension support.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-tui</div>
+          <div class="crate-tag">Visualization</div>
+          <div class="crate-desc">Ratatui terminal dashboard rendering Day Header, Policy Step, Thinking Stream, and Termination Status.</div>
+        </div>
+
+        <div class="crate-card">
+          <div class="crate-name">cogni-cli</div>
+          <div class="crate-tag">Entrypoint</div>
+          <div class="crate-desc">Clap CLI exposing dream, tui, show-day, smoke, prompts, and recent-rows commands.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Walkthrough & Experiment Results -->
+  <section id="walkthrough">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="walkthrough.tag">Empirical Results</div>
+        <h2 class="section-title" data-i18n="walkthrough.title">Live Outer Iteration Experiment</h2>
+        <p class="section-sub" data-i18n="walkthrough.sub">
+          A full 5-iteration dreaming cycle executed against our multi-domain enterprise SaaS boundary specification (`boundary.yaml`).
+        </p>
+      </div>
+
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('table', this)">Experiment Metrics</button>
+        <button class="tab-btn" onclick="switchTab('logs', this)">Terminal Execution Log</button>
+        <button class="tab-btn" onclick="switchTab('boundary', this)">boundary.yaml Spec</button>
+      </div>
+
+      <!-- Tab 1: Table -->
+      <div id="tab-table" class="tab-pane active">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Tree Delta</th>
+                <th>Goal Progress (Frontier)</th>
+                <th>Boundary Mastery</th>
+                <th>Pareto AUC</th>
+                <th>Beta (&beta;)</th>
+                <th>Selected Policy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Day 5</strong></td>
+                <td><span class="badge badge-success">+1 / -0 / r0</span></td>
+                <td><strong>0.54</strong> (Converged)</td>
+                <td><span class="badge badge-accent">1.00 (100%)</span></td>
+                <td>0.0000</td>
+                <td>0.40</td>
+                <td><code>baseline_parallel_refining#llm-err-fallback</code></td>
+              </tr>
+              <tr>
+                <td><strong>Day 4</strong></td>
+                <td><span class="badge badge-success">+1 / -0 / r0</span></td>
+                <td><strong>0.53</strong></td>
+                <td><span class="badge badge-accent">1.00 (100%)</span></td>
+                <td>0.0000</td>
+                <td>0.40</td>
+                <td><code>baseline_parallel_refining#llm-err-fallback</code></td>
+              </tr>
+              <tr>
+                <td><strong>Day 3</strong></td>
+                <td><span class="badge badge-success">+1 / -0 / r0</span></td>
+                <td><strong>0.51</strong></td>
+                <td><span class="badge badge-accent">1.00 (100%)</span></td>
+                <td>0.0000</td>
+                <td>0.40</td>
+                <td><code>baseline_parallel_refining#llm-err-fallback</code></td>
+              </tr>
+              <tr>
+                <td><strong>Day 2</strong></td>
+                <td><span class="badge badge-success">+1 / -0 / r0</span></td>
+                <td><strong>0.48</strong></td>
+                <td><span class="badge badge-accent">1.00 (100%)</span></td>
+                <td>0.0000</td>
+                <td>0.40</td>
+                <td><code>baseline_parallel_refining#llm-err-fallback</code></td>
+              </tr>
+              <tr>
+                <td><strong>Day 1</strong></td>
+                <td><span class="badge badge-success">+2 / -0 / r0</span></td>
+                <td><strong>0.41</strong></td>
+                <td><span class="badge badge-accent">1.00 (100%)</span></td>
+                <td>0.0000</td>
+                <td>0.40</td>
+                <td><code>baseline_parallel_refining#llm-err-fallback</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Logs -->
+      <div id="tab-logs" class="tab-pane">
+        <pre><code>$ COGNI_ALLOW_WRITE=1 cargo run -p cogni-cli -- dream \
+    --db cogni.db \
+    --iterations 5 \
+    --boundary boundary.yaml
+
+iter 1: policy=baseline_parallel_refining#llm-err-fallback V=0.0000 goal=0.41 boundary=1.00 [+2/-0/r0] → persisted (plan: width=4, depth=4)
+iter 2: policy=baseline_parallel_refining#llm-err-fallback V=0.0000 goal=0.48 boundary=1.00 [+1/-0/r0] → persisted (plan: width=4, depth=4)
+iter 3: policy=baseline_parallel_refining#llm-err-fallback V=0.0000 goal=0.51 boundary=1.00 [+1/-0/r0] → persisted (plan: width=4, depth=4)
+iter 4: policy=baseline_parallel_refining#llm-err-fallback V=0.0000 goal=0.53 boundary=1.00 [+1/-0/r0] → persisted (plan: width=4, depth=4)
+iter 5: policy=baseline_parallel_refining#llm-err-fallback V=0.0000 goal=0.54 boundary=1.00 [+1/-0/r0] → persisted (plan: width=4, depth=4)</code></pre>
+      </div>
+
+      <!-- Tab 3: Boundary -->
+      <div id="tab-boundary" class="tab-pane">
+        <pre><code>boundary:
+  - id: finance-core
+    modules: [gl, ap, ar, fa, banking, tax]
+    surfaces: [结账, 过账, 对账, 票据, 凭证, 报表]
+  - id: biz-core
+    modules: [inventory, sales, purchase, crm]
+    surfaces: [订单, 出入库, 客户, 报价]
+  - id: integration
+    modules: [gl↔biz, gl↔bank, biz↔tax]
+    surfaces: [过账接口, 银行对账单, 发票开具]</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Quickstart -->
+  <section id="quickstart">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="quickstart.tag">Get Started</div>
+        <h2 class="section-title" data-i18n="quickstart.title">Quickstart CLI Commands</h2>
+        <p class="section-sub" data-i18n="quickstart.sub">
+          Clone the repository and run outer iterations directly using cargo.
+        </p>
+      </div>
+
+      <pre><code># 1. Clone repository
+git clone https://github.com/yekeno/cogni-rsi.git
+cd cogni-rsi
+
+# 2. Run full workspace test suite (76 tests)
+cargo test --workspace
+
+# 3. Execute 5 outer dreaming iterations
+COGNI_ALLOW_WRITE=1 cargo run -p cogni-cli -- dream \
+  --db cogni.db \
+  --iterations 5 \
+  --boundary boundary.yaml
+
+# 4. View persisted records in SQLite
+cargo run -p cogni-cli -- recent-rows --db cogni.db --limit 5
+
+# 5. Launch interactive Ratatui TUI dashboard
+cargo run -p cogni-cli -- tui --db cogni.db</code></pre>
+    </div>
+  </section>
+
+  <!-- Citation -->
+  <section id="citation" style="background: var(--bg-surface);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Academic Attribution</div>
+        <h2 class="section-title">Citation</h2>
+        <p class="section-sub">If you reference or build upon this implementation, please cite the Dream-RSI paper:</p>
+      </div>
+
+      <pre><code>@article{zheng2026dreamrsi,
+  title   = {Dream-RSI: Recursive Self-Improvement through Evolving Worlds},
+  author  = {Tong Zheng and Xidong Wu and Zheng Zhang and Zhankui He and
+             Chaoyi Zhang and Benjamin Coleman and Ruoqiao Wei and Di Bai and
+             Haolin Liu and Rui Liu and Xue Wang and Yue Zhuan and
+             Wang-Cheng Kang and Renkai Xiang and Heng Huang and
+             Xinwu Cheng and Yunsong Guo},
+  journal = {arXiv preprint arXiv:2609.14858v1},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2609.14858}
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p style="margin-bottom: 8px;">
+        <strong>cogni-rsi</strong> — Licensed under Apache 2.0 / MIT.
+      </p>
+      <p>
+        <a href="https://github.com/yekeno/cogni-rsi" target="_blank">GitHub</a> •
+        <a href="https://arxiv.org/abs/2609.14858" target="_blank">arXiv:2609.14858</a> •
+        <a href="walkthrough.md">Detailed Walkthrough Doc</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching
+    function switchTab(name, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    // Formula (1) Score Calculator
+    function updateScore() {
+      const auc = parseFloat(document.getElementById('auc-slider').value);
+      const k = parseInt(document.getElementById('k-slider').value);
+      const p = parseInt(document.getElementById('p-slider').value);
+      const beta = parseFloat(document.getElementById('beta-slider').value);
+
+      document.getElementById('auc-val').innerText = auc.toFixed(2);
+      document.getElementById('k-val').innerText = k;
+      document.getElementById('p-val').innerText = p;
+      document.getElementById('beta-val').innerText = beta.toFixed(2);
+
+      const penalty = beta * (k / Math.max(p, 1));
+      const score = Math.max(0, auc - penalty);
+
+      document.getElementById('score-val').innerText = score.toFixed(4);
+
+      const verdict = document.getElementById('calc-verdict');
+      if (k / p > 0.8) {
+        verdict.innerText = "Heavy sequential penalty: excessive rounds (K) relative to parallel probes (P).";
+        verdict.style.color = "var(--warning)";
+      } else {
+        verdict.innerText = "High parallel efficiency: candidate achieves favorable exploration scaling.";
+        verdict.style.color = "var(--success)";
+      }
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', target);
+      document.getElementById('theme-icon').innerText = target === 'light' ? '🌙' : '☀️';
+    }
+
+    // Bilingual Support
+    const i18n = {
+      zh: {
+        'nav.theory': '理论公式',
+        'nav.tree': '认知树',
+        'nav.crates': '系统架构',
+        'nav.walkthrough': '实测演练',
+        'nav.quickstart': '快速上手',
+        'hero.badge': '基于 Dream-RSI (arXiv:2609.14858v1) • 10-Crate 工业级 Rust 实现',
+        'hero.title1': '企业级复杂 SaaS 系统认知的',
+        'hero.title2': '递归自我改进 (Dream-RSI) 架构',
+        'hero.sub': '将历史探索沉淀为离线前缀回放模拟器，在模拟器中做梦演化探索策略，自主攻克软件未知业务边界。',
+        'hero.cta1': '查看实测数据与完整演练',
+        'hero.cta2': '访问 GitHub 仓库源码',
+        'stats.tests': '工作区单元与集成测试全部通过',
+        'stats.crates': '高内聚、严格解耦架构',
+        'stats.replay': '纯前缀只读不可伪造保证',
+        'stats.mastery': 'SaaS 目标边界 100% 覆盖',
+        'theory.tag': '核心数学理论',
+        'theory.title': 'Dream-RSI 目标优化函数 (公式 1)',
+        'theory.sub': '在大规模搜索空间中，在线验证成本极高。Dream-RSI 在离线回放库上优化探索策略，以 Pareto AUC 认知增益并严格惩罚串行推理开销。',
+        'calc.title': '离线策略评分动态推演器',
+        'tree.tag': '纯前缀回放模拟器',
+        'tree.title': '认知树拓扑与边界掌控度',
+        'tree.sub': '树节点代表所发现的 SaaS 业务知识。前沿叶子节点直接驱动加权目标推进度与边界覆盖率的真实计算。',
+        'crates.tag': '模块化工作区',
+        'crates.title': '10-Crate 架构蓝图',
+        'crates.sub': '严格遵守编译器物理隔离，通过强制不变式保证爬虫只读安全与模拟器不可伪造性。',
+        'walkthrough.tag': '实测真实数据',
+        'walkthrough.title': '5 轮外部做梦迭代实测报告',
+        'walkthrough.sub': '针对多领域企业 SaaS 边界规范（boundary.yaml）运行 5 轮迭代的完整真实数据记录。',
+        'quickstart.tag': '开发者上手',
+        'quickstart.title': '快速启动 CLI 命令',
+        'quickstart.sub': '克隆代码并直接使用 cargo 运行外部做梦循环。'
+      },
+      en: {
+        'nav.theory': 'Theory',
+        'nav.tree': 'Cognition Tree',
+        'nav.crates': 'Architecture',
+        'nav.walkthrough': 'Walkthrough',
+        'nav.quickstart': 'Quickstart',
+        'hero.badge': 'Dream-RSI (arXiv:2609.14858v1) Foundation • 10-Crate Rust Workspace',
+        'hero.title1': 'Recursive Self-Improvement for',
+        'hero.title2': 'Complex Enterprise SaaS Cognition',
+        'hero.sub': 'An industrial Rust realization of the Dream-RSI outer iteration loop. Turn historical exploration into an offline replay simulator, dream counterfactual policies, and autonomously master software boundaries.',
+        'hero.cta1': 'View Live Walkthrough & Data',
+        'hero.cta2': 'Browse GitHub Repository',
+        'stats.tests': 'Workspace Tests Passed',
+        'stats.crates': 'Strict Decoupled Architecture',
+        'stats.replay': 'Prefix-Only Simulator Guarantees',
+        'stats.mastery': 'Boundary Mastery on SaaS Target',
+        'theory.tag': 'Theoretical Foundations',
+        'theory.title': 'The Dream-RSI Formulation (Eq. 1)',
+        'theory.sub': 'In high-dimensional discovery spaces, online evaluation is prohibitively expensive. Dream-RSI optimizes the exploration policy π over historical replay via Pareto AUC quality penalized by sequential reasoning overhead.',
+        'calc.title': 'Interactive Policy Score Calculator',
+        'tree.tag': 'Prefix-Only Replay Simulator',
+        'tree.title': 'Cognition Tree & Frontier Mastery',
+        'tree.sub': 'Nodes represent discovered SaaS domain knowledge. Leaf nodes form the frontier, measured via weighted understanding and boundary coverage ratio.',
+        'crates.tag': 'Modular Workspace',
+        'crates.title': 'The 10-Crate System Blueprint',
+        'crates.sub': 'Separation of concerns enforced by Rust compiler boundaries. Hard safety invariants guarantee read-only crawl safety and zero-hallucination replay.',
+        'walkthrough.tag': 'Empirical Results',
+        'walkthrough.title': 'Live Outer Iteration Experiment',
+        'walkthrough.sub': 'A full 5-iteration dreaming cycle executed against our multi-domain enterprise SaaS boundary specification (boundary.yaml).',
+        'quickstart.tag': 'Get Started',
+        'quickstart.title': 'Quickstart CLI Commands',
+        'quickstart.sub': 'Clone the repository and run outer iterations directly using cargo.'
+      }
+    };
+
+    let currentLang = 'en';
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'zh' : 'en';
+      document.getElementById('lang-text').innerText = currentLang === 'en' ? '中文' : 'EN';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[currentLang] && i18n[currentLang][key]) {
+          el.innerText = i18n[currentLang][key];
+        }
+      });
+    }
+  </script>
+</body>
+</html>

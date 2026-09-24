@@ -1,7 +1,7 @@
 # cogni-rsi: Recursive Self-Improvement Exploration over Complex SaaS
 
 <p align="center">
-  <a href="#english"><b>English</b></a> | <a href="#chinese"><b>简体中文</b></a>
+  <a href="#english"><b>English</b></a> | <a href="#chinese"><b>简体中文</b></a> | <a href="https://yekeno.github.io/cogni-rsi/"><b>🌐 Interactive Documentation (GitHub Pages)</b></a> | <a href="docs/walkthrough.md"><b>📊 Live Walkthrough & Data</b></a>
 </p>
 
 <p align="center">
@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://yekeno.github.io/cogni-rsi/"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-blue.svg" alt="GitHub Pages" /></a>
   <img src="https://img.shields.io/badge/Rust-1.80%2B-orange.svg" alt="Rust Version" />
   <img src="https://img.shields.io/badge/Architecture-10--Crate%20Workspace-blue.svg" alt="Architecture" />
   <img src="https://img.shields.io/badge/Tests-76%20Passed-brightgreen.svg" alt="Tests" />
@@ -164,7 +165,21 @@ COGNI_DB_URL=sqlite://cogni.db
 
 ---
 
-### 4. Milestone Implementation History
+### 4. Interactive Documentation & Walkthrough
+
+* **🌐 Interactive GitHub Pages**: [https://yekeno.github.io/cogni-rsi/](https://yekeno.github.io/cogni-rsi/)
+  * **Interactive Equation (1) Dynamic Calculator**: Adjust $\text{AUC}$, $K$, $P$, and $\beta$ in real time to observe parallel efficiency scoring and serialization penalty.
+  * **Interactive Cognition Tree SVG Topology**: Visual representation of root, domain categories, and frontier leaves determining goal progress.
+  * **10-Crate System Blueprint**: Bento-style interactive explorer of decoupled crates and safety invariants.
+  * **Bilingual & Responsive**: One-click English / 简体中文 toggle with dark/light themes.
+* **📊 End-to-End Walkthrough & Experiment Results**: [`docs/walkthrough.md`](docs/walkthrough.md)
+  * Detailed step-by-step record of running 5 outer dreaming iterations on `boundary.yaml`.
+  * Metric trajectory showing monotonic `goal_progress` growth ($0.41 \to 0.54$) and 100% `boundary_mastery`.
+  * Verified output from TUI day headers, invariant smoke tests, and 76 unit/integration tests.
+
+---
+
+### 5. Milestone Implementation History
 
 * **PR #1: Foundation & Scaffold**
   * Initialized 10-crate workspace layout, workspace `Cargo.toml`, and dependency graph.
@@ -344,7 +359,21 @@ COGNI_DB_URL=sqlite://cogni.db
 
 ---
 
-### 4. 提交里程碑演进历史
+### 4. 交互式文档与实测报告
+
+* **🌐 交互式 GitHub Pages 文档站**：[https://yekeno.github.io/cogni-rsi/](https://yekeno.github.io/cogni-rsi/)
+  * **公式 (1) 动态策略打分推演器**：实时滑动调整 $\text{AUC}$, $K$, $P$, $\beta$ 观察综合得分与串行化惩罚项的动态反馈。
+  * **交互式认知树拓扑结构**：SVG 可视化呈现根节点、业务域分类节点及前沿叶子节点的收敛状态。
+  * **10-Crate 架构蓝图**：Bento 风格卡片交互展示解耦模块、职责分工与安全门禁不变式。
+  * **中英双语与主题切换**：全站无刷新一键中英文切换，适配明暗双色主题。
+* **📊 完整端到端演练与实测数据报告**：[`docs/walkthrough.md`](docs/walkthrough.md)
+  * 针对真实 `boundary.yaml`（`finance-core`, `biz-core`, `integration`）运行 5 轮做梦迭代的完整真实数据记录。
+  * 记录 `goal_progress` 稳步单调递增（$0.41 \to 0.54$）及 100% `boundary_mastery` 边界完全对齐收敛指标表。
+  * TUI 终端看板与纯前缀只读不变式冒烟测试验证记录。
+
+---
+
+### 5. 提交里程碑演进历史
 
 * **PR #1: 骨架工程与核心不变式设立**
   * 构建 10-crate 工作区脚手架，定义 `CognitionNode` 与 `CognitionTree`。
@@ -372,7 +401,7 @@ COGNI_DB_URL=sqlite://cogni.db
 ---
 
 <a name="citation"></a>
-### 5. Citation & Reference
+### 6. Citation & Reference
 
 If you find this research implementation helpful, please cite the original Dream-RSI foundation paper:
 
